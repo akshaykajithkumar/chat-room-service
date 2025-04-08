@@ -3,6 +3,7 @@
 ## Features
 
 - **Multiple Client Support**: Handles multiple clients concurrently using **goroutines** and **channels**.
+- **Server-Sent Events (SSE)**: The `/messages` endpoint uses SSE to stream real-time messages to clients.
 - **Thread-Safe Operations**: Access to shared resources is protected using **mutexes** to ensure thread-safety.
 - **Timeout Handling**: `/messages` endpoint has a timeout to prevent blocking indefinitely.
 - **Client Disconnect Handling**: When a client leaves, they will stop receiving messages.
@@ -43,9 +44,9 @@ To join the chat room, send a POST request to `/join` with a client ID as a quer
 curl --location --request POST 'http://localhost:5000/join?id=client123'
 ```
 
-### 2. Receive Messages
+### 2. Receive Messages (SSE)
 
-To receive messages, send a GET request to `/messages` with your client ID as a query parameter. This will keep the connection open and stream messages. If no new messages arrive within a set timeout period, the connection will close.
+To receive messages, send a GET request to `/messages` with your client ID as a query parameter. This will keep the connection open and stream messages in real time using **Server-Sent Events (SSE)**. If no new messages arrive within a set timeout period, the connection will close.
 
 #### Request:
 
@@ -72,5 +73,4 @@ To leave the chat room, send a POST request to `/leave` with the client ID as a 
 ```bash
 curl --location --request DELETE 'http://localhost:5000/leave?id=client123'
 ```
-
 
